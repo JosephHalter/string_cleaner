@@ -1,0 +1,27 @@
+= string_cleaner
+
+Just add a method .clean to String which does:
+* convert invalid UTF-8 strings from ISO-8859-15 to UTF-8 to fix them
+* recognize euro char from both ISO 8859-15 and Windows-1252
+* replace \r\n and \r with \n normalizing end of lines
+* replace control characters and other invisible chars by spaces
+
+== Install
+
+  sudo gem install JosephHalter-string_cleaner
+
+== Ruby 1.9+
+
+Ruby 1.9+ has native support for unicode and specs are 100% passing.
+
+== Ruby 1.8.x
+
+Because Ruby 1.8.x has no native support for Unicode, you must install oniguruma and the jasherai-oniguruma gem.
+
+== Example usage
+
+  "\210\004".clean # => " "
+
+== Copyright
+
+Copyright (c) 2009 Joseph Halter. See LICENSE for details.
