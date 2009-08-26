@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/string_cleaner.rb",
      "spec/spec_helper.rb",
-     "spec/string_cleaner_spec.rb"
+     "spec/string_cleaner_spec.rb",
+     "string_cleaner.gemspec"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/JosephHalter/string_cleaner}
