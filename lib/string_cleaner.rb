@@ -12,10 +12,10 @@ module String::Cleaner
     if utf8.respond_to?(:force_encoding) 
       utf8.force_encoding("UTF-8") # for Ruby 1.9+
       unless utf8.valid_encoding? # if invalid UTF-8
-        utf8 = utf8.force_encoding("ISO8859-15")
+        utf8 = utf8.force_encoding("ISO8859-1")
         utf8.encode!("UTF-8", :invalid => :replace, :undef => :replace, :replace => "")
       end
-      utf8.gsub!("\u0080", "€") # special case for euro sign from Windows-1252
+      utf8.gsub!(/\u0080|¤/, "€") # special case for euro sign from Windows-1252
       utf8
     else
       require "iconv"

@@ -1,6 +1,9 @@
-require 'rake/tasklib'
-require 'rake/rdoctask'
-require 'rubygems'
+if RUBY_VERSION.to_f<1.9
+  require 'rake/tasklib'
+  require 'rake/rdoctask'
+  require 'rubygems'
+end
+
 begin
   require 'bundler/setup'
 rescue LoadError
