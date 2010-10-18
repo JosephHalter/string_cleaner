@@ -1,3 +1,5 @@
+require 'rake/tasklib'
+require 'rake/rdoctask'
 require 'rubygems'
 begin
   require 'bundler/setup'

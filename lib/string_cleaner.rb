@@ -14,9 +14,8 @@ module String::Cleaner
       unless utf8.valid_encoding? # if invalid UTF-8
         utf8 = utf8.force_encoding("ISO8859-15")
         utf8.encode!("UTF-8", :invalid => :replace, :undef => :replace, :replace => "")
-        utf8.gsub!("\xC2\x80", "€") # special case for euro sign from Windows-1252
-        utf8.force_encoding("UTF-8")
       end
+      utf8.gsub!("\u0080", "€") # special case for euro sign from Windows-1252
       utf8
     else
       require "iconv"
@@ -25,7 +24,7 @@ module String::Cleaner
         Iconv.new("UTF-8", "UTF-8").iconv(utf8)
       rescue
         utf8.gsub!(/\x80/n, "\xA4")
-        Iconv.new("UTF-8//IGNORE", "ISO8859-15").iconv(utf8)
+        Iconv.new("UTF-8//IGNORE", "ISO8859-1").iconv(utf8).gsub("¤", "€")
       end
     end
   end
@@ -67,7 +66,7 @@ module String::Cleaner
   end
 
   def to_permalink(separator="-")
-    fix_endlines.to_ascii(chartable).downcase.gsub(/[^a-z0-9]+/, separator).trim(separator)
+    clean.to_ascii(chartable).downcase.gsub(/[^a-z0-9]+/, separator).trim(separator)
   end
 
   def nl2br
