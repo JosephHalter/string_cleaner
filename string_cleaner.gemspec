@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.rdoc",
      "Rakefile",
-     "VERSION",
      "lib/string_cleaner.rb",
      "spec/spec_helper.rb",
      "spec/string_cleaner_spec.rb",
