@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 gemspec
 
-group :development do
-  gem "ruby-debug19"
+if RUBY_VERSION.to_f<1.9
+  gem "oniguruma", :git => "http://github.com/jasherai/oniguruma.git"
 end

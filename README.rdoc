@@ -18,9 +18,15 @@ Ruby 1.9+ has native support for unicode and specs are 100% passing.
 
 Because Ruby 1.8.x has no native support for Unicode, you must install oniguruma and the jasherai-oniguruma gem.
 
+For example, using homebrew you would do:
+  
+    brew install oniguruma
+    bundle config build.jasherai-oniguruma --with-onig-dir=`brew --prefix oniguruma`
+    bundle install
+
 == Example usage
 
-  "\210\004".clean # => " "
+    "\210\004".clean # => " "
 
 == Copyright
 
