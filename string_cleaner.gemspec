@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
-  s.summary = %q{TODO}
+  s.summary = %q{Fix invalid UTF-8 and wipe invisible chars, fully compatible with Ruby 1.8 & 1.9 with extensive specs}
   s.test_files = [
     "spec/spec_helper.rb",
      "spec/string_cleaner_spec.rb"
