@@ -9,7 +9,7 @@ module String::Cleaner
 
   def fix_encoding
     utf8 = dup
-    if utf8.respond_to?(:force_encoding) 
+    if utf8.respond_to?(:force_encoding)
       utf8.force_encoding("UTF-8") # for Ruby 1.9+
       unless utf8.valid_encoding? # if invalid UTF-8
         utf8 = utf8.force_encoding("ISO8859-1")
@@ -34,31 +34,40 @@ module String::Cleaner
   end
   
   SPECIAL_SPACES = [
-            0x00A0,                # White_Space # Zs       NO-BREAK SPACE
-            0x1680,                # White_Space # Zs       OGHAM SPACE MARK
-            0x180E,                # White_Space # Zs       MONGOLIAN VOWEL SEPARATOR
-            (0x2000..0x200A).to_a, # White_Space # Zs  [11] EN QUAD..HAIR SPACE
-            0x2028,                # White_Space # Zl       LINE SEPARATOR
-            0x2029,                # White_Space # Zp       PARAGRAPH SEPARATOR
-            0x202F,                # White_Space # Zs       NARROW NO-BREAK SPACE
-            0x205F,                # White_Space # Zs       MEDIUM MATHEMATICAL SPACE
-            0x3000,                # White_Space # Zs       IDEOGRAPHIC SPACE
-          ].flatten.collect{|e| [e].pack 'U*'}
+    0x00A0,                # NO-BREAK SPACE
+    0x1680,                # OGHAM SPACE MARK
+    0x180E,                # MONGOLIAN VOWEL SEPARATOR
+    (0x2000..0x200A).to_a, # EN QUAD..HAIR SPACE
+    0x2028,                # LINE SEPARATOR
+    0x2029,                # PARAGRAPH SEPARATOR
+    0x202F,                # NARROW NO-BREAK SPACE
+    0x205F,                # MEDIUM MATHEMATICAL SPACE
+    0x3000,                # IDEOGRAPHIC SPACE
+  ].flatten.collect{|e| [e].pack 'U*'}
+
+  ZERO_WIDTH = [
+    0x200B,                # ZERO WIDTH SPACE
+    0x200C,                # ZERO WIDTH NON-JOINER
+    0x200D,                # ZERO WIDTH JOINER
+    0x2060,                # WORD JOINER
+    0xFEFF,                # ZERO WIDTH NO-BREAK SPACE
+  ].flatten.collect{|e| [e].pack 'U*'}
 
   def fix_invisible_chars
     utf8 = self.dup
-    if utf8.respond_to?(:force_encoding)
+    utf8.gsub!(Regexp.new(ZERO_WIDTH.join("|")), "")
+    utf8 = if utf8.respond_to?(:force_encoding)
       utf8 = (utf8 << " ").split(/\n/u).each{|line|
         line.gsub!(/[\s\p{C}]/u, " ")
       }.join("\n").chop!
-      utf8.gsub!(Regexp.new(SPECIAL_SPACES.join("|")), " ")
-      utf8.force_encoding("UTF-8")
     else
       require "oniguruma"
       utf8.split(/\n/n).collect{|line|
-        Oniguruma::ORegexp.new("[\\s\\p{C}]", {:encoding => Oniguruma::ENCODING_UTF8}).gsub(line, " ")
+        Oniguruma::ORegexp.new("[\\p{C}]", {:encoding => Oniguruma::ENCODING_UTF8}).gsub(line, " ")
       }.join("\n").chop!
     end
+    utf8.gsub!(Regexp.new(SPECIAL_SPACES.join("|") + "|\s"), " ")
+    utf8
   end
 
   def trim(chars = "")
