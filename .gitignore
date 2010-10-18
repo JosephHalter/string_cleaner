@@ -1,5 +1,6 @@
-*.sw?
+.bundle
 .DS_Store
 coverage
 rdoc
 pkg
+*.gem
