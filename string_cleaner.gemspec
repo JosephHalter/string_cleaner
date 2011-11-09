@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{string_cleaner}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joseph Halter"]
@@ -32,7 +32,8 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
      "spec/string_cleaner_spec.rb"
   ]
-  s.add_runtime_dependency "unidecoder"
+  s.add_runtime_dependency "talentbox-unidecoder", "1.1.2"
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
 
   if s.respond_to? :specification_version then

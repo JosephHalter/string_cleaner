@@ -2,6 +2,8 @@ if RUBY_VERSION.to_f<1.9
   require 'rake/tasklib'
   require 'rake/rdoctask'
   require 'rubygems'
+else
+  require 'rdoc/task'
 end
 
 begin
@@ -22,7 +24,6 @@ end
 
 task :default => :spec
 
-require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "string_cleaner"
