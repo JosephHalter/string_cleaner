@@ -6,23 +6,11 @@ Just add a method .clean to String which does:
 * replace \r\n and \r with \n normalizing end of lines
 * replace control characters and other invisible chars by spaces
 
+Supports only Ruby 2.6+
+
 == Install
 
-  sudo gem install JosephHalter-string_cleaner
-
-== Ruby 1.9+
-
-Ruby 1.9+ has native support for unicode and specs are 100% passing.
-
-== Ruby 1.8.x
-
-Because Ruby 1.8.x has no native support for Unicode, you must install oniguruma and the jasherai-oniguruma gem.
-
-For example, using homebrew you would do:
-  
-    brew install oniguruma
-    bundle config build.jasherai-oniguruma --with-onig-dir=`brew --prefix oniguruma`
-    bundle install
+  sudo gem install string_cleaner
 
 == Example usage
 
